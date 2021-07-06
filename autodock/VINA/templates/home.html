@@ -1,0 +1,46 @@
+{% extends "boilerplate.html" %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+<section class="container d-flex">
+    <form method="post" enctype = "multipart/form-data" id="plinput" style="width: 100%;">
+        <div class="form-group">
+            <label for="proteinFiles">Input Protein File *(.pdbqt)</label>
+            <input type="file" multiple="true" class="form-control-file" id="proteinFiles" name="proteinFiles">
+        </div>
+        <div class="form-group">
+            <label for="ligandFiles">Input Ligand File *(.pdbqt)</label>
+            <input type="file" multiple="true" class="form-control-file" id="ligandFiles" name="ligandFiles">
+        </div>
+        <div class="form-group">
+            <label for="paramFile">Input the co-ordinates and other parameter via .csv file</label>
+            <input type="file" class="form-control-file" id="paramFile" name="paramFile">
+        </div>
+        <input type="hidden" value="" name="randomval" id="randomval">
+        <button class="btn btn-primary" id="uploadbtn">Upload Files</button>
+    </form>
+    <div style="width: 100%;">
+        <table class="table table-dark table-sm table-bordered" style="text-align: center;" id="ptable">
+            <caption>Choose the files and click submit to see the file pairs that are provided</caption>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Protien</th>
+                    <th scope="col">Ligand</th>
+                    <th scope="col">Output File name</th>
+                </tr>
+            </thead>
+            <tbody id="tableRows">
+
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary" id="processbtn">Process Files</button>
+        {% if down %}
+            <br><br><br>
+            <div> Please download the files here :  </div>
+            {% for i in out %}
+                <a href="{{ url_for('mainapp.output', path = i) }}" download="{{i}}"> {{ i }}  </a><br>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}
